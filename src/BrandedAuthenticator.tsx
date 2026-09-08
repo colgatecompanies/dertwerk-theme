@@ -1,10 +1,9 @@
 /**
- * Branded Amplify Authenticator — ships BYTE-IDENTICAL in all five dertwerk
- * apps (landing, admin, account, farmrx, fsacre) so the sign-in experience is
- * the same regardless of which subdomain somebody lands on first.
+ * Branded Amplify Authenticator — the sign-in screen every DertWerk app
+ * shows, so it looks the same whichever subdomain somebody lands on first.
  *
- * If you change this file, mirror it to the other four (or extract to a
- * shared workspace package).
+ * There is one of it, here in @dertwerk/theme. It used to be copied into all
+ * five apps with a note asking whoever changed it to mirror the change.
  *
  * It follows the palette. Every colour comes from the --auth-* tokens in
  * brandedAuthenticator.css, which is also shared — see that file for why
@@ -39,12 +38,14 @@ type ChildrenProps = { signOut?: () => void; user?: unknown }
 /**
  * Which appearance is in force, read off <html>.
  *
- * `palette-gold` is spelled identically in all five apps, so the palette can
- * be read straight from the class list. The MODE cannot: the dertwerk sites
- * write `.theme-light` (absent = dark) and the product apps write
- * `.theme-dark` (absent = light), so "no classes" means opposite things in
- * the two families. Each app therefore declares `--auth-mode` once in its own
- * stylesheet, and that is the single thing this file relies on.
+ * The palette is a class, `palette-gold`, and can be read straight off
+ * <html>. The mode is asked for instead, via `--auth-mode`, because the two
+ * app families used to spell it with opposite polarity — the sites wrote
+ * `.theme-light` and the products `.theme-dark`, each letting the absence of
+ * its own class mean the other mode, so "no classes" meant opposite things.
+ * applyTheme now writes both classes explicitly and that ambiguity is gone,
+ * but reading a declared token is still the better contract: it is one line
+ * per app, and it does not tie this component to a class-naming convention.
  *
  * Read at render rather than module load: bootstrapTheme() has already run by
  * then, and a stale module-level read would survive a toggle.

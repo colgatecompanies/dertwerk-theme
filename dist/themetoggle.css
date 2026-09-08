@@ -1,9 +1,9 @@
 /* Appearance control.
  *
- * One file for all five apps, which needs care because the control does not
- * sit on the same thing everywhere: on the dertwerk sites it sits on a page
- * surface, and in the two products it sits on the brand-coloured top bar.
- * Colours that read on one are wrong on the other.
+ * Shared by every app, which needs care because the control does not sit on
+ * the same thing everywhere: on the dertwerk sites it sits on a page surface,
+ * and in the two products it sits on the brand-coloured top bar. Colours that
+ * read on one are wrong on the other.
  *
  * So the app supplies two role tokens and this file uses nothing else:
  *

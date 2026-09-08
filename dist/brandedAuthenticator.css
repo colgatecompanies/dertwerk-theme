@@ -1,10 +1,10 @@
 /* Branded Authenticator styles.
  *
- * This file ships BYTE-IDENTICAL in all five dertwerk apps, and it is the
- * one screen every app shares, so it defines its own palette rather than
- * borrowing each app's tokens. Two apps naming the same colour differently
- * is fine everywhere else; on the sign-in screen it would mean five
- * subtly different front doors.
+ * The one screen every app shares, so it defines its own palette rather than
+ * borrowing the host app's tokens. The apps agree on a vocabulary but not on
+ * every value — in Gold the three dertwerk sites and the two products sit on
+ * different grounds — and borrowing would have meant five subtly different
+ * front doors.
  *
  * The four scopes below are the same four the rest of the system has, and
  * their Field values are deliberately identical to what FarmRx and FSAcre
@@ -137,8 +137,8 @@
    Both product apps style every `input` in dark mode, which repainted these
    fields in the APP's neutrals instead of this screen's — invisible in Field
    (the two happen to nearly coincide) and clearly wrong in Gold. Claim them
-   back, so this screen looks the same in all five apps by construction
-   rather than by luck. */
+   back, so this screen looks the same in every app by construction rather
+   than by luck. */
 .branded-auth__shell input:not([type="checkbox"]):not([type="radio"]),
 .branded-auth__shell select,
 .branded-auth__shell textarea {

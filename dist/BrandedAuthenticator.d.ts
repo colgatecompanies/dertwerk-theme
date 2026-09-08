@@ -1,10 +1,9 @@
 /**
- * Branded Amplify Authenticator — ships BYTE-IDENTICAL in all five dertwerk
- * apps (landing, admin, account, farmrx, fsacre) so the sign-in experience is
- * the same regardless of which subdomain somebody lands on first.
+ * Branded Amplify Authenticator — the sign-in screen every DertWerk app
+ * shows, so it looks the same whichever subdomain somebody lands on first.
  *
- * If you change this file, mirror it to the other four (or extract to a
- * shared workspace package).
+ * There is one of it, here in @dertwerk/theme. It used to be copied into all
+ * five apps with a note asking whoever changed it to mirror the change.
  *
  * It follows the palette. Every colour comes from the --auth-* tokens in
  * brandedAuthenticator.css, which is also shared — see that file for why

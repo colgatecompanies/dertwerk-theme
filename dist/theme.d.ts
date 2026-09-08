@@ -20,8 +20,10 @@
  * Default is Field/Dark on purpose: it is what every dertwerk site renders,
  * so a signed-in customer moving between them sees one continuous product.
  *
- * Hand-copied into five repos and byte-identical in all five. Nothing
- * enforces that yet, so mirror any edit by hand.
+ * Lives in @dertwerk/theme and is installed by every app, so there is exactly
+ * one of it. It used to be hand-copied into five repos with nothing holding
+ * the copies together, which is how a comment edited in one of them drifted
+ * them apart inside an hour.
  */
 export type Palette = 'gold' | 'field';
 export type Mode = 'light' | 'dark';
