@@ -1,0 +1,69 @@
+/* Appearance control.
+ *
+ * One file for all five apps, which needs care because the control does not
+ * sit on the same thing everywhere: on the dertwerk sites it sits on a page
+ * surface, and in the two products it sits on the brand-coloured top bar.
+ * Colours that read on one are wrong on the other.
+ *
+ * So the app supplies two role tokens and this file uses nothing else:
+ *
+ *   --control-ink     the ink of whatever this sits on. --ink on a page
+ *                     surface; --nav-ink on the brand bar, where it flips to
+ *                     near-black in Gold because white on gold is 2.3:1.
+ *   --control-ground  what is behind it, used as the label colour once a
+ *                     button is filled with --control-ink and needs to punch
+ *                     back out of it.
+ *
+ * Same idea as --auth-mode on the sign-in screen: the shared file names the
+ * role, each app answers it once.
+ */
+.themesw { display: flex; align-items: center; gap: 0.4rem; }
+.themesw__grp {
+  display: flex;
+  background: color-mix(in srgb, var(--control-ink) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--control-ink) 40%, transparent);
+  border-radius: 999px;
+  padding: 2px;
+}
+.themesw__btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--control-ink);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.32rem 0.62rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: background-color .15s ease, color .15s ease;
+}
+/* Background only. Anything that touches `color` here has to be repeated on
+   --on below, or hovering the selected button hides its own label -- which is
+   exactly what happened the first time: black on black in Gold, white on
+   white in Field. */
+.themesw__btn:hover { background: color-mix(in srgb, var(--control-ink) 14%, transparent); }
+.themesw__btn--on,
+.themesw__btn--on:hover {
+  background: var(--control-ink);
+  color: var(--control-ground);
+}
+.themesw__btn:focus-visible {
+  outline: 2px solid var(--control-ink);
+  outline-offset: 2px;
+}
+.themesw__lbl { display: inline; }
+
+/* The products hide the labels earlier, because their bar also carries
+   breadcrumbs, an email address and three other controls. */
+@media (max-width: 1024px) {
+  .themesw__lbl { display: none; }
+  .themesw__btn { padding: 0.32rem 0.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .themesw__btn { transition: none; }
+}

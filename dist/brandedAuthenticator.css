@@ -1,0 +1,190 @@
+/* Branded Authenticator styles.
+ *
+ * This file ships BYTE-IDENTICAL in all five dertwerk apps, and it is the
+ * one screen every app shares, so it defines its own palette rather than
+ * borrowing each app's tokens. Two apps naming the same colour differently
+ * is fine everywhere else; on the sign-in screen it would mean five
+ * subtly different front doors.
+ *
+ * The four scopes below are the same four the rest of the system has, and
+ * their Field values are deliberately identical to what FarmRx and FSAcre
+ * render in dark mode — so a first-time visitor signs in and lands in the
+ * app without the ground changing under them.
+ *
+ * ── Why data attributes and not the theme classes ──────────────────────
+ * The two families spell the mode axis differently: the dertwerk sites put
+ * `.theme-light` on <html> (absent = dark), the product apps put
+ * `.theme-dark` (absent = light). A shared stylesheet cannot branch on that
+ * — "no classes" means dark in one family and light in the other. So each
+ * app declares `--auth-mode` once (see its own stylesheet), the component
+ * reads it and stamps `data-auth-mode` / `data-auth-palette` on the shell,
+ * and everything below keys off those. Polarity-agnostic, and the contract
+ * is one token per app.
+ *
+ * The shell only renders when the user is unauthenticated (see
+ * BrandedAuthenticator.tsx). Once signed in the app's own layout takes over
+ * with no wrapper from this file, so nothing here can leak into the app.
+ */
+
+/* ---------- FIELD / DARK — the default ---------- */
+.branded-auth__shell {
+  --auth-bg:            #0f172a;
+  --auth-card:          #222d3c;   /* 1.29 off the shell, matching the apps */
+  --auth-inset:         #212b39;
+  --auth-ink:           #e5e7eb;
+  --auth-ink-dim:       #cbd5e1;
+  --auth-ink-faint:     #9ca3af;
+  --auth-accent:        #367c2b;   /* fills: the primary button, active tab */
+  --auth-accent-bright: #4caf80;   /* accent AS TEXT: links, brand wordmark.
+                                      #40916c is the obvious pick and is 3.83:1
+                                      on the card, so it fails; this clears 4.5
+                                      on the card (5.42) and the shell (6.59). */
+  --auth-accent-dim:    #2c6823;
+  --auth-accent-pale:   #14361f;
+  --auth-on-accent:     #ffffff;   /* ink on an --auth-accent fill */
+  --auth-border:        #374151;
+  --auth-border-soft:   #263244;
+  --auth-glow:          rgba(64, 145, 108, 0.14);
+  --auth-focus-ring:    rgba(64, 145, 108, 0.30);
+  --auth-card-shadow:   rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- FIELD / LIGHT ---------- */
+.branded-auth__shell[data-auth-mode="light"] {
+  --auth-bg:            #f6f7f3;
+  --auth-card:          #ffffff;
+  --auth-inset:         #f0f2ec;
+  --auth-ink:           #1a1a1a;
+  --auth-ink-dim:       #4b5563;
+  --auth-ink-faint:     #677066;
+  --auth-accent:        #367c2b;
+  --auth-accent-bright: #2c6823;   /* the lighter green fails as text here */
+  --auth-accent-dim:    #2c6823;
+  --auth-accent-pale:   #d8f3dc;
+  --auth-on-accent:     #ffffff;
+  --auth-border:        #e4e6e1;
+  --auth-border-soft:   #eceee9;
+  --auth-glow:          rgba(54, 124, 43, 0.10);
+  --auth-focus-ring:    rgba(54, 124, 43, 0.25);
+  --auth-card-shadow:   rgba(20, 30, 15, 0.14);
+}
+
+/* ---------- GOLD / DARK — what this screen shipped as ---------- */
+.branded-auth__shell[data-auth-palette="gold"] {
+  --auth-bg:            #0a0c0b;
+  --auth-card:          #24271d;   /* 1.29 off the shell, matching the apps */
+  --auth-inset:         #23261c;
+  --auth-ink:           #f4efe2;
+  --auth-ink-dim:       #c9c3b2;
+  --auth-ink-faint:     #948f80;   /* lifted with the card: #8d897a was 4.33
+                                      on it once the card moved to 1.29 */
+  --auth-accent:        #c98a3c;
+  --auth-accent-bright: #f3b552;
+  --auth-accent-dim:    #8a5e29;
+  --auth-accent-pale:   #fde9c5;
+  --auth-on-accent:     #0a0c0b;
+  --auth-border:        rgba(201, 138, 60, 0.35);
+  --auth-border-soft:   rgba(201, 138, 60, 0.18);
+  --auth-glow:          rgba(201, 138, 60, 0.12);
+  --auth-focus-ring:    rgba(243, 181, 82, 0.25);
+  --auth-card-shadow:   rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- GOLD / LIGHT ----------
+   Gold is a black-ground colour: the bright gold is 8.55:1 on the dark
+   substrate and 1.81:1 on cream. So the golds stay put for FILLS and
+   anything read as text drops to the dim gold. */
+.branded-auth__shell[data-auth-palette="gold"][data-auth-mode="light"] {
+  --auth-bg:            #e8e4d8;
+  --auth-card:          #f4efe2;
+  --auth-inset:         #e8e4d8;
+  --auth-ink:           #0a0c0b;
+  --auth-ink-dim:       #2a2f24;
+  --auth-ink-faint:     #63675c;   /* the footer sits on the shell, not the
+                                      card, where #6b6f63 is 4.05:1 */
+  --auth-accent:        #c98a3c;
+  --auth-accent-bright: #7d5525;   /* the dim gold is 4.45:1 on this ground —
+                                      just under, so a shade darker again */
+  --auth-accent-dim:    #8a5e29;
+  --auth-accent-pale:   #f5e9d5;
+  --auth-on-accent:     #0a0c0b;
+  --auth-border:        rgba(138, 94, 41, 0.35);
+  --auth-border-soft:   rgba(138, 94, 41, 0.18);
+  --auth-glow:          rgba(201, 138, 60, 0.14);
+  --auth-focus-ring:    rgba(138, 94, 41, 0.25);
+  --auth-card-shadow:   rgba(10, 12, 11, 0.16);
+}
+
+.branded-auth__shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  color-scheme: dark;
+  background:
+    radial-gradient(1200px 700px at 50% -10%, var(--auth-glow), transparent 60%),
+    var(--auth-bg);
+}
+.branded-auth__shell[data-auth-mode="light"] { color-scheme: light; }
+
+.branded-auth__shell [data-amplify-router] {
+  max-width: 440px;
+  width: 100%;
+}
+
+/* The shell renders inside each app's own DOM, so app-global rules reach in.
+   Both product apps style every `input` in dark mode, which repainted these
+   fields in the APP's neutrals instead of this screen's — invisible in Field
+   (the two happen to nearly coincide) and clearly wrong in Gold. Claim them
+   back, so this screen looks the same in all five apps by construction
+   rather than by luck. */
+.branded-auth__shell input:not([type="checkbox"]):not([type="radio"]),
+.branded-auth__shell select,
+.branded-auth__shell textarea {
+  background: var(--auth-inset);
+  color: var(--auth-ink);
+  border-color: var(--auth-border);
+}
+
+.branded-auth__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem 0.5rem;
+  text-align: center;
+}
+
+.branded-auth__logo {
+  height: 64px;
+  width: auto;
+  margin-bottom: 0.75rem;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+}
+/* The logo is drawn for a dark ground; on a light one the drop shadow reads
+   as grime rather than lift. */
+.branded-auth__shell[data-auth-mode="light"] .branded-auth__logo {
+  filter: none;
+}
+
+.branded-auth__brand {
+  color: var(--auth-accent-bright);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.branded-auth__tagline {
+  color: var(--auth-ink-dim);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.branded-auth__footer {
+  text-align: center;
+  color: var(--auth-ink-faint);
+  font-size: 0.75rem;
+  padding: 1rem;
+}

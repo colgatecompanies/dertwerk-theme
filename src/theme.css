@@ -1,0 +1,213 @@
+/* ============================================================
+   DertWerk — palette + mode
+
+   Two independent axes, both expressed as classes on <html>:
+
+     .palette-gold   present = Gold,  absent = Field
+     .theme-light    present = Light, absent = Dark
+
+   No classes at all is Field/Dark, which is deliberate: it is the
+   same palette FarmRx and FSAcre render in, so moving between the
+   sites does not flash or change character.
+
+   The token NAMES are historical -- this started as a gold-only
+   site, so surfaces are called --substrate-* and accents
+   --accent-*. They are roles now, not colours: --accent is "the
+   primary accent", which is gold in one palette and green in the
+   other. Renaming them would touch every consuming file, so the
+   names stay and this comment carries the meaning.
+
+   Two roles that must NOT be conflated, and previously were:
+
+     --accent*  UI accent   buttons, links, focus rings
+     --trace*   board metal the PCB artwork only
+
+   In Field the board is silver and the buttons are green. One
+   token cannot be both, which is why the board rules were
+   repointed at --trace*.
+   ============================================================ */
+
+/* ---------- FIELD / DARK — the default ---------- */
+:root {
+  color-scheme: dark;
+  /* the appearance control sits on a page surface here */
+  --control-ink: var(--ink);
+  --control-ground: var(--surface);
+  --auth-mode: dark;
+
+  --ground: #0f172a;   /* page ground   (farmrx --bg dark) */
+  --surface: #222d3c;   /* card surface, 1.29 off the ground */
+  --surface-sunk: #212b39;   /* inset/input */
+
+  --ink: #e5e7eb;
+  --ink-muted: #cbd5e1;
+  --ink-subtle: #9ca3af;
+
+  --accent:        #367c2b;   /* --green: primary accent, constant in Field */
+  --accent-edge: #40916c;   /* --green-light */
+  --accent-strong:    #2c6823;   /* --green-dark */
+  --edge:  #374151;   /* --border dark: hairlines and outlines */
+  --accent-wash:  #1e293b;
+  --accent-glow:   rgba(64, 145, 108, 0.45);
+  --on-accent:     #ffffff;   /* ink that sits ON --accent */
+
+  --link: #60a5fa;            /* --accent dark */
+
+  /* board artwork: silver on the dark substrate */
+  --trace:         #d6dade;
+  --trace-bright:  #f0f2f4;
+  --trace-dim:     #8c9197;
+  --trace-outline: #8c9197;
+  --trace-glow:    rgba(214, 218, 222, 0.4);
+  --substrate-grid: rgba(229, 231, 235, 0.05);
+  --silk-dim:      #9ca3af;
+
+  /* chip ink is constant per palette: the packages are dark in every
+     mode, so their labels must not fade when the page goes light */
+  --chip-ink:      #7cc24f;
+  --chip-ink-soon: #9ca3af;
+  --pulse-a: #dbeafe;
+  --pulse-b: #60a5fa;
+  --page-tint: rgba(64, 145, 108, 0.10);
+  --accent-ink: #40916c;   /* 4.4:1 on the dark navy */
+}
+
+/* ---------- FIELD / LIGHT ---------- */
+:root.theme-light {
+  color-scheme: light;
+  /* The one thing brandedAuthenticator.css cannot work out for itself: the
+     two app families spell the mode axis with opposite polarity, so a shared
+     stylesheet cannot tell "no classes" apart. Declared here, read there. */
+  --auth-mode: light;
+
+  --ground: #f6f7f3;   /* --bg */
+  --surface: #ffffff;   /* --surface */
+  --surface-sunk: #f6f7f3;
+
+  --ink: #1a1a1a;
+  --ink-muted: #4b5563;
+  --ink-subtle: #677066;
+
+  --accent:        #367c2b;   /* green does not move between modes */
+  --accent-edge: #40916c;
+  --accent-strong:    #2c6823;
+  --edge:  #e4e6e1;   /* --border light */
+  --accent-wash:  #d8f3dc;   /* --green-pale */
+  --accent-glow:   rgba(54, 124, 43, 0.3);
+  --on-accent:     #ffffff;
+
+  --link: #1d4ed8;            /* --accent light */
+
+  --trace:         #8c9197;   /* metal, dark stop, so it reads on white */
+  --trace-bright:  #8c9197;
+  --trace-dim:     #bcc0c5;
+  --trace-outline: #bcc0c5;
+  --trace-glow:    rgba(140, 145, 151, 0.35);
+  --substrate-grid: rgba(26, 26, 26, 0.06);
+  --silk-dim:      #677066;
+
+  --chip-ink:      #7cc24f;
+  --chip-ink-soon: #9ca3af;
+  --pulse-a: #dbeafe;
+  --pulse-b: #1d4ed8;
+  --page-tint: rgba(54, 124, 43, 0.07);
+  --accent-ink: #2c6823;   /* --green-dark, 7:1 on #f6f7f3 */
+}
+
+/* ---------- GOLD / DARK — what the site shipped as ---------- */
+:root.palette-gold {
+  color-scheme: dark;
+
+  --ground: #0a0c0b;
+  --surface: #24271d;   /* 1.292 off the ground, as in Field */
+  --surface-sunk: #23261c;
+
+  --ink: #f4efe2;
+  --ink-muted: #c9c3b2;
+  --ink-subtle: #8d897a;
+
+  --accent:        #c98a3c;
+  --accent-edge: #f3b552;
+  --accent-strong:    #8a5e29;
+  --edge:  rgba(201, 138, 60, 0.35);
+  --accent-wash:  rgba(201, 138, 60, 0.14);
+  --accent-glow:   rgba(243, 181, 82, 0.55);
+  --on-accent:     #0a0c0b;
+
+  --link: #f3b552;
+
+  --trace:         #c98a3c;
+  --trace-bright:  #f3b552;
+  --trace-dim:     #8a5e29;
+  --trace-outline: rgba(201, 138, 60, 0.35);
+  --trace-glow:    rgba(243, 181, 82, 0.55);
+  --substrate-grid: rgba(190, 142, 70, 0.06);
+  --silk-dim:      #9c978a;
+
+  --chip-ink:      #f3b552;
+  --chip-ink-soon: #8d897a;
+  --pulse-a: #fff6e2;
+  --pulse-b: #f3b552;
+  --page-tint: rgba(201, 138, 60, 0.12);
+  --accent-ink: #f3b552;   /* 10.8:1 on the black substrate */
+}
+
+/* ---------- GOLD / LIGHT ----------
+   The golds do not move between Gold's two modes; only the neutrals
+   do. The chip packages are dark in both, so the only gold on cream
+   is live traces, headings and buttons.
+
+   Measured, because it constrains where this can be used: --harvest
+   is 8.55:1 on the dark substrate and 1.81:1 on cream. Gold is a
+   black-ground colour. It carries display type and a button face
+   here; small text gets --accent-strong (4.45:1) instead, and any
+   dense screen adopting this needs that checked again. */
+:root.palette-gold.theme-light {
+  color-scheme: light;
+
+  --ground: #e8e4d8;   /* --silk */
+  --surface: #f4efe2;   /* --ink, as a raised card */
+  --surface-sunk: #e8e4d8;
+
+  --ink: #0a0c0b;        /* --ground */
+  --ink-muted: #2a2f24;        /* --pad */
+  --ink-subtle: #6b6f63;        /* --soon */
+
+  --accent:        #c98a3c;   /* true gold, unchanged from dark */
+  --accent-edge: #d8a23a;   /* --harvest */
+  --accent-strong:    #8a5e29;   /* the one gold readable on cream */
+  --edge:  rgba(138, 94, 41, 0.35);
+  --accent-wash:  rgba(138, 94, 41, 0.12);
+  --accent-glow:   rgba(201, 138, 60, 0.35);
+  --on-accent:     #0a0c0b;
+
+  --link: #8a5e29;            /* 4.45:1 -- small text needs the dim gold */
+
+  --trace:         #c98a3c;
+  --trace-bright:  #d8a23a;
+  --trace-dim:     #6b6f63;   /* --soon: dormant traces read as unpowered */
+  --trace-outline: #6b6f63;
+  --trace-glow:    rgba(201, 138, 60, 0.35);
+  --substrate-grid: rgba(10, 12, 11, 0.06);
+  --silk-dim:      #6b6f63;
+
+  --chip-ink:      #f3b552;   /* on a dark package: unchanged */
+  --chip-ink-soon: #8d897a;
+  --pulse-a: #d8a23a;
+  --pulse-b: #c98a3c;
+  --page-tint: rgba(201, 138, 60, 0.10);
+  --accent-ink: #8a5e29;   /* the only gold readable on cream, 4.45:1 */
+}
+
+/* Status colours are semantic, not palette, and stay put. */
+:root {
+  --live: #8fd14f;
+  --soon: #6b6f63;
+}
+
+/* Repainting the whole page on a toggle looks broken without this,
+   and janky with it applied to everything -- so: surfaces only. */
+body, .app-shell, .card, .panel { transition: background-color .18s ease, color .18s ease; }
+@media (prefers-reduced-motion: reduce) {
+  body, .app-shell, .card, .panel { transition: none; }
+}
