@@ -1,0 +1,63 @@
+# Build the theme package, and prove the committed dist matches its source.
+#
+# This package is consumed by all five DertWerk apps straight from git
+# (github:colgatecompanies/dertwerk-theme#<tag>), and it ships a COMMITTED
+# dist/ because Vite will not transpile TSX inside node_modules and this
+# package deliberately has no `prepare` hook -- npm runs prepare for every git
+# dependency, which would make five Amplify builds compile the theme on the way
+# past.
+#
+# 🚨 That design has one failure mode, and the dist-drift job below exists for
+# it: edit src/, forget to rebuild and commit dist/, and every app keeps
+# consuming the OLD build. Nothing errors. Five apps quietly render stale
+# styling, and the source in this repo says otherwise. That is a bad afternoon
+# to debug from the app end.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      # npm ci rather than npm install, on purpose. It fails when package.json
+      # and the lockfile disagree, where install silently reconciles them. That
+      # exact drift sat unnoticed in two other repos here -- farm-analytics-api's
+      # infra/ and dertwerk-backend, where it broke the build for six months.
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: The committed dist must match the build
+        # `git diff --exit-code` is the whole check: after building, the working
+        # tree must be identical to what was committed. If it is not, dist/ was
+        # not rebuilt for the last src/ change and the apps are consuming a
+        # stale package.
+        #
+        # Includes untracked files (a NEW dist file that was never committed
+        # would otherwise slip past a plain diff).
+        run: |
+          if [ -n "$(git status --porcelain dist/)" ]; then
+            echo "::error::dist/ does not match a fresh build of src/."
+            echo ""
+            echo "The five apps consume the COMMITTED dist/, so this means they are"
+            echo "getting a stale build. Run 'npm run build' and commit dist/."
+            echo ""
+            git status --porcelain dist/
+            git diff -- dist/ | head -100
+            exit 1
+          fi
+          echo "dist/ is in sync with src/."
