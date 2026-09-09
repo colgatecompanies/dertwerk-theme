@@ -1,6 +1,6 @@
 {
   "name": "@dertwerk/theme",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Palette, light/dark, the appearance control and the branded sign-in screen, shared by every DertWerk application.",
   "license": "UNLICENSED",
   "type": "module",

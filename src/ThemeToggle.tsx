@@ -63,7 +63,11 @@ export default function ThemeToggle({
     <div className="themesw" role="group" aria-label="Appearance">
       <div className="themesw__grp">
         {pal('gold', 'Gold')}
-        {pal('field', 'Field')}
+        {/* The stored value stays 'field'; only the label changes. "Field" is a
+            first-class domain object in both products -- FSA Fields, Field
+            List, Field Operations, the FIELD breadcrumb -- so a theme by that
+            name competed with a word that already means a parcel of land. */}
+        {pal('field', 'Green')}
       </div>
       <div className="themesw__grp">
         {mode('light', 'Light', '☀')}

@@ -27,5 +27,5 @@ export default function ThemeToggle({ value, onChange, persist, compact = false,
     };
     const pal = (p, label) => (_jsx("button", { type: "button", className: value.palette === p ? 'themesw__btn themesw__btn--on' : 'themesw__btn', "aria-pressed": value.palette === p, onClick: () => commit({ palette: p }), children: label }));
     const mode = (m, label, glyph) => (_jsxs("button", { type: "button", className: value.mode === m ? 'themesw__btn themesw__btn--on' : 'themesw__btn', "aria-pressed": value.mode === m, onClick: () => commit({ mode: m }), title: label, children: [_jsx("span", { "aria-hidden": "true", children: glyph }), !compact && _jsx("span", { className: "themesw__lbl", children: label })] }));
-    return (_jsxs("div", { className: "themesw", role: "group", "aria-label": "Appearance", children: [_jsxs("div", { className: "themesw__grp", children: [pal('gold', 'Gold'), pal('field', 'Field')] }), _jsxs("div", { className: "themesw__grp", children: [mode('light', 'Light', '☀'), mode('dark', 'Dark', '☾')] })] }));
+    return (_jsxs("div", { className: "themesw", role: "group", "aria-label": "Appearance", children: [_jsxs("div", { className: "themesw__grp", children: [pal('gold', 'Gold'), pal('field', 'Green')] }), _jsxs("div", { className: "themesw__grp", children: [mode('light', 'Light', '☀'), mode('dark', 'Dark', '☾')] })] }));
 }
